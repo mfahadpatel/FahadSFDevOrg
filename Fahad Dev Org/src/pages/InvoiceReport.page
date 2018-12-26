@@ -1,0 +1,26 @@
+<apex:page standardController="Invoice__c" renderAs="pdf" applyBodyTag="false">
+
+<!--<apex:stylesheet value="{!URLFOR($Resource.Styles,'pdf.css')}"/> -->
+
+<h1>Invoice Details of <b><apex:outputText value=" {!Invoice__c.Name}"/></b>!</h1>
+<p>Your Invoice Details are:</p>
+<table>
+<tr><th>Customer Name</th>
+    <td><apex:outputText value="{!Invoice__c.Customer_Name__c}"/></td>
+    </tr>
+<tr><th>Invoice Reporter</th>
+    <td><apex:outputText value="{!Invoice__c.Owner.Name}"/></td>
+    </tr>
+<tr><th>Invoice Amount</th>
+    <td><apex:outputText value="{!Invoice__c.Amount__c}"/></td>
+    </tr>    
+<tr><th>Invoice Date</th>
+    <td><apex:outputText value="{0,date,short}">
+        <apex:param value="{!Invoice__c.CreatedDate}"/>
+        </apex:outputText></td>
+    </tr>
+</table>
+   
+
+
+</apex:page>

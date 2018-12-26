@@ -1,0 +1,58 @@
+<apex:page standardController="Invoice__c" extensions="InvoiceAndPaymentsAddEditExtensionV1"
+           tabStyle="Account" title="Invoice Payment Edit">
+    <apex:sectionHeader title="Create/Edit Invoice with Payments"/>
+    <apex:pageMessages />
+    <apex:form id="formInvoice">
+        <apex:PageBlock mode="mainDetail">
+            <apex:pageBlockButtons >
+                <apex:commandButton action="{!cancel}" value="Exit" />
+                <apex:commandButton action="{!save}" value="Save" />
+                <apex:commandButton action="{!newPayment}" value="New Payment" rendered="{!NOT(ISBLANK(Invoice__c.id))}"/>
+            </apex:pageBlockButtons>
+            <apex:repeat value="{!$ObjectType.Invoice__c.fieldSets}">
+            </apex:repeat>
+            
+             <apex:pageBlockSection title="Invoice Details" collapsible="true" id="mainRecord" columns="2" >          
+                    <apex:inputField value="{!Invoice__c.Customer_Name__c}"/>
+                    <apex:inputField value="{!Invoice__c.Invoice_Date__c}"/>
+                    <apex:inputField value="{!Invoice__c.Amount__c}"/>       
+                    <apex:inputField value="{!Invoice__c.Total_Payment__c}"/>              
+            </apex:pageBlockSection>
+            
+            <apex:pageBlock title="Invoice Payments">
+                <apex:pageBlockTable id="PBTPayment" value="{!payments}" var="payment">
+                    <apex:column value="{!payment.Name}"/>
+                    <apex:column headerValue="Amount">
+                        <apex:inputField value="{!payment.Amount__c}"/>
+                    </apex:column>
+                    <apex:column headerValue="Payment Date">
+                        <apex:inputField value="{!payment.Payment_Date__c}"/>
+                    </apex:column>
+                    <apex:column headerValue="Action">
+                        <apex:commandButton action="{!deletePayment}" value="Delete" rerender="PBTPayment">
+                            <apex:param name="paymentIdent" value="{!payment.Id}" assignTo="{!chosenPaymentID}"/>
+                        </apex:commandButton>
+                    </apex:column>
+                </apex:pageBlockTable>
+            </apex:pageBlock>
+
+            
+           <!-- <apex:outputPanel id="PaymentList"> 
+                 <apex:repeat value="{!payments}" var="payment" >
+                    <apex:pageBlockSection columns="1"  title="Payment {!payment.Name}" collapsible="true">
+                        <apex:pageBlockSectionItem >
+                              <apex:pageBlockSection columns="2">
+                                <apex:inputField value="{!payment.Payment_Date__c}"/>
+                                <apex:inputField value="{!payment.Amount__c}"/>                                
+                              </apex:pageBlockSection>
+                           </apex:pageBlockSectionItem>
+                            <apex:commandButton value="Delete Contact" action="{!deletePayment}" rerender="PaymentList">
+                               <apex:param name="PaymentIdent" value="{!payment.id}" assignTo="{!chosenPaymentId}"/>
+                            </apex:commandButton>
+                        </apex:pageBlockSection>
+                </apex:repeat>
+            </apex:outputPanel> -->
+            
+        </apex:PageBlock>
+    </apex:form>
+</apex:page>

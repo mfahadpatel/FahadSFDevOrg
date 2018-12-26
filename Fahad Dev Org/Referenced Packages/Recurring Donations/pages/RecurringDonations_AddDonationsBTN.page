@@ -1,0 +1,4 @@
+<apex:page standardController="npe03__Recurring_Donation__c" extensions="npe03.RecurringDonations_AddDonationsBTN" action="{!buttonClick}">
+    <apex:PageMessages />
+    <apex:outputLink target="_self" title="Return"  value="{!returnURL}" >Return</apex:outputLink>
+</apex:page>

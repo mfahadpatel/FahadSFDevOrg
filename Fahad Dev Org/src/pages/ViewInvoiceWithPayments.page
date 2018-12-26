@@ -1,0 +1,48 @@
+<apex:page controller="ViewInvoiceWithPayments_Controller">
+  <apex:sectionHeader title="View Payments According to Invoice"/>
+  <apex:pageMessages />
+  <apex:form >
+      <apex:PageBlock >          
+              <apex:PageBlockSection columns="1">
+                  <apex:pageBlockSectionItem >
+                      <apex:OutputLabel value="Please Select Invoice:" />
+                      <apex:actionregion >
+                          <apex:SelectList value="{!selectedInvoice}" size="1">
+                              <apex:selectOptions value="{!InvoiceNames}"></apex:selectOptions>
+                              <apex:ActionSupport event="onchange" action="{!getPayments}" rerender="PaymentBlock,InvoiceDetails" />
+                              <!--<apex:Param id="invID" assignTo="{!SelectedInvID}" value="{!selectedInvoice}"></apex:Param>-->
+                          </apex:SelectList>
+                      </apex:actionregion>                                           
+                  </apex:pageBlockSectionItem>
+                  
+          </apex:PageBlockSection>
+          <apex:pageBlock title="Invoice Details" id="InvoiceDetails">
+               <apex:PageBlockSection columns="1">
+                      <apex:pageBlockSectionItem >
+                          <apex:OutputLabel value="Invoice Amount:" /><apex:OutputLabel value="{!InvoiceDetail.Amount__c}" />
+                      </apex:pageBlockSectionItem>
+               </apex:PageBlockSection>
+              <apex:pageBlockTable value="{!InvoiceDetail}" var="invoiceDet">
+                    <apex:column value="{!invoiceDet.Name}"/>
+                    <apex:column headerValue="Amount">
+                        <apex:outputLabel value="{!invoiceDet.Amount__c}"/>
+                    </apex:column>
+                    <apex:column headerValue="Customer Name">
+                        <apex:outputLabel value="{!invoiceDet.Customer_Name__c}"/>
+                    </apex:column>
+              </apex:pageBlockTable>
+          </apex:pageBlock>
+          <apex:pageBlock title="Invoice Payments" id="PaymentBlock">
+              <apex:pageBlockTable value="{!payments}" var="payment">
+                    <apex:column value="{!payment.Name}"/>
+                    <apex:column headerValue="Amount">
+                        <apex:outputLabel value="{!payment.Amount__c}"/>
+                    </apex:column>
+                    <apex:column headerValue="Payment Date">
+                        <apex:outputLabel value="{!payment.Payment_Date__c}"/>
+                    </apex:column>
+              </apex:pageBlockTable>
+          </apex:pageBlock>
+      </apex:PageBlock>
+  </apex:form>
+</apex:page>
