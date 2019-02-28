@@ -72,10 +72,16 @@ public class InvoiceAndPaymentsAddEditExtensionV1 {
               //result=updatePayments();
               if (null!= payments)
               {
-                  List<Payment__c> updPayments = new List<Payment__c>();
+                  List<Payment__c> Payments_ToInsert = new List<Payment__c>();
+                  List<Payment__c> Payments_ToUpdate = new List<Payment__c>();
                   try
                   {
-                       update payments;
+                  	   //for(Payment__c p:payments)
+                  	   //{
+                  	   //		if(p.Id != null)
+                  	   //			Payments_ToUpdate.add()
+                  	   //}
+                       upsert payments;
                   }
                   catch (Exception e)
                   {
@@ -98,14 +104,16 @@ public class InvoiceAndPaymentsAddEditExtensionV1 {
          if (result)
          {
             // call standard controller save, but don't capture the return value which will redirect to view page
-                std.save();
+                //std.save();
                 ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.INFO, 'Changes saved'));
+                getPayments();
          }
          pr.getParameters().put('id', getInvoice().id);
           
-         return pr;
+         //return pr;
+         return null;
     }
-    
+     
     public void newPayment()
     {
        /*if (updatePayments())
@@ -127,10 +135,11 @@ public class InvoiceAndPaymentsAddEditExtensionV1 {
        {
           if (chosenPaymentId != null)
           {
-             Payment__c payment = new Payment__c(Id=chosenPaymentId);
+             
              try
              {
-                 delete payment;
+             	Payment__c payment = new Payment__c(Id=chosenPaymentId);
+                delete payment;
                  
                  getPayments();
                 // null the contacts list so that it is rebuilt

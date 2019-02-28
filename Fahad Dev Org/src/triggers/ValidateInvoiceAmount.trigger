@@ -6,7 +6,6 @@ trigger ValidateInvoiceAmount on Payment__c (before insert,before update,after d
             Invoice_Payment.ValidateAmount(objPay_new);   
              
     }
-    system.debug('::abc::');
     if(Trigger.isAfter) {        
         Payment__c[] objPay_old = trigger.old;
         map <id,Payment__c> objPay_oldMap = trigger.OldMap;

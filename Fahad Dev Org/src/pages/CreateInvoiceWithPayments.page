@@ -1,12 +1,12 @@
 <apex:page standardController="Invoice__c" extensions="InvoiceAndPaymentsAddEditExtensionV1"
            tabStyle="Account" title="Invoice Payment Edit">
     <apex:sectionHeader title="Create/Edit Invoice with Payments"/>
-    <apex:pageMessages />
+    <apex:pageMessages id="msg"/>
     <apex:form id="formInvoice">
         <apex:PageBlock mode="mainDetail">
             <apex:pageBlockButtons >
                 <apex:commandButton action="{!cancel}" value="Exit" />
-                <apex:commandButton action="{!save}" value="Save" />
+                <apex:commandButton action="{!save}" value="Save" rerender="formInvoice,msg"/>
                 <apex:commandButton action="{!newPayment}" value="New Payment" rendered="{!NOT(ISBLANK(Invoice__c.id))}"/>
             </apex:pageBlockButtons>
             <apex:repeat value="{!$ObjectType.Invoice__c.fieldSets}">
@@ -29,7 +29,7 @@
                         <apex:inputField value="{!payment.Payment_Date__c}"/>
                     </apex:column>
                     <apex:column headerValue="Action">
-                        <apex:commandButton action="{!deletePayment}" value="Delete" rerender="PBTPayment">
+                        <apex:commandButton action="{!deletePayment}" value="Delete" rerender="formInvoice,msg" rendered="{!IF(payment.Id != null,true,false)}">
                             <apex:param name="paymentIdent" value="{!payment.Id}" assignTo="{!chosenPaymentID}"/>
                         </apex:commandButton>
                     </apex:column>
