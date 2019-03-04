@@ -133,5 +133,9 @@ public class Invoice_Payment{
         
         update InvoiceToUpdate;
         */
+        
+        Integer i= 0;
+        i= 0; 
+        i = 0;
     }
 }
